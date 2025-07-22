@@ -6,6 +6,11 @@ import os
 
 app = FastAPI()
 
+# ✅ Root route to avoid 404 on GET /
+@app.get("/")
+def read_root():
+    return {"message": "FEMA Certificate PDF Generator is running 🎉"}
+
 @app.post("/generate-fema-pdf/")
 def generate_fema_pdf(
     duty: str = Form(...),
@@ -41,22 +46,22 @@ def generate_fema_pdf(
         c.setFont("Helvetica", 10)
         c.setFillColorRGB(0, 0, 0)  # black
 
-        # Draw strings at required coordinates (set as per your form layout)
-        c.drawString(350, 640, f"{duty}")
-        c.drawString(400, 550, f"{invoice}")
-        c.drawString(350, 515, f"{quota}")
-        c.drawString(210, 470, f"{others}")
-        c.drawString(170, 420, f"{exporter_name}")
-        c.drawString(160, 370, f"{person_name}")
-        c.drawString(90, 320, f"{person_designation}")
-        c.drawString(250, 330, f"{division_head}")
-        c.drawString(440, 430, f"{broker_name}")
-        c.drawString(440, 380, f"{broker_designation}")
-        c.drawString(440, 330, f"{identity_card}")
-        c.drawString(120, 185, f"{date}")
-        c.drawString(200, 165, f"{company_name}")
-        c.drawString(200, 100, f"{signatory}")
-        c.drawString(440, 470, f"{duty_draw}")
+        # Draw strings at required coordinates
+        c.drawString(350, 640, duty)
+        c.drawString(400, 550, invoice)
+        c.drawString(350, 515, quota)
+        c.drawString(210, 470, others)
+        c.drawString(170, 420, exporter_name)
+        c.drawString(160, 370, person_name)
+        c.drawString(90, 320, person_designation)
+        c.drawString(250, 330, division_head)
+        c.drawString(440, 430, broker_name)
+        c.drawString(440, 380, broker_designation)
+        c.drawString(440, 330, identity_card)
+        c.drawString(120, 185, date)
+        c.drawString(200, 165, company_name)
+        c.drawString(200, 100, signatory)
+        c.drawString(440, 470, duty_draw)
 
         c.save()
 
